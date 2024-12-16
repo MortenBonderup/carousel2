@@ -31,7 +31,6 @@
         }
         .arrow-left {
             left: 10px;
-            z-index: 100;
         }
         .arrow-right {
             right: 10px;
@@ -45,14 +44,13 @@
             <img src="image1.jpg" alt="Image 1">
             <img src="image2.jpg" alt="Image 2">
             <img src="image3.jpg" alt="Image 3">
-            <img src="image4.jpg" alt="Image 2">
-            <img src="image5.jpg" alt="Image 3">
         </div>
         <button class="arrow arrow-right" onclick="nextSlide()">❯</button>
     </div>
 
     <script>
         let currentIndex = 0;
+        let startX;
 
         function showSlide(index) {
             const images = document.getElementById('carousel-images');
@@ -74,6 +72,19 @@
         function prevSlide() {
             showSlide(currentIndex - 1);
         }
+
+        document.getElementById('carousel-images').addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        document.getElementById('carousel-images').addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            if (startX > endX + 50) {
+                nextSlide();
+            } else if (startX < endX - 50) {
+                prevSlide();
+            }
+        });
     </script>
 </body>
 </html>
