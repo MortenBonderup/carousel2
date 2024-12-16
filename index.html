@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
+    <style>
+        .carousel {
+            position: relative;
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-images img {
+            width: 100%;
+            border: 2px solid #ddd;
+        }
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .arrow-left {
+            left: 10px;
+            z-index: 100;
+        }
+        .arrow-right {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <button class="arrow arrow-left" onclick="prevSlide()">❮</button>
+        <div class="carousel-images" id="carousel-images">
+            <img src="image1.jpg" alt="Image 1">
+            <img src="image2.jpg" alt="Image 2">
+            <img src="image3.jpg" alt="Image 3">
+            <img src="image4.jpg" alt="Image 2">
+            <img src="image5.jpg" alt="Image 3">
+        </div>
+        <button class="arrow arrow-right" onclick="nextSlide()">❯</button>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const images = document.getElementById('carousel-images');
+            const totalImages = images.children.length;
+            if (index >= totalImages) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = totalImages - 1;
+            } else {
+                currentIndex = index;
+            }
+            images.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+    </script>
+</body>
+</html>
